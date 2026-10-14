@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LogHunter report</title>
+<style>
+:root { --bg:#f7f7f5; --fg:#1d1d1b; --muted:#6b6b66; --line:#e2e1dc; --panel:#fff; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#161615; --fg:#ecebe6; --muted:#9d9c96; --line:#2e2e2b; --panel:#1f1f1d; } }
+body { margin:0; padding:24px 16px; background:var(--bg); color:var(--fg);
+  font:15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width:1200px; margin:auto; }
+h1 { margin:0 0 4px; font-size:24px; } .meta { color:var(--muted); margin-bottom:20px; }
+.cards { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  padding:12px 18px; min-width:110px; text-transform:capitalize; color:var(--muted); }
+.card span { display:block; font-size:28px; font-weight:700; color:var(--fg); }
+.table-wrap { overflow-x:auto; background:var(--panel); border:1px solid var(--line); border-radius:8px; }
+table { border-collapse:collapse; width:100%; }
+th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-size:13px; color:var(--muted); font-weight:600; }
+.sev { padding:2px 8px; border-radius:4px; font-size:12px; font-weight:700; text-transform:uppercase; }
+.critical { border-left:4px solid #c62828; } .high { border-left:4px solid #e65100; }
+.medium { border-left:4px solid #b28704; } .low { border-left:4px solid #1565c0; }
+.sev.critical { background:#c62828; color:#fff; border:0; } .sev.high { background:#e65100; color:#fff; border:0; }
+.sev.medium { background:#f9a825; color:#1d1d1b; border:0; } .sev.low { background:#1565c0; color:#fff; border:0; }
+pre { white-space:pre-wrap; word-break:break-all; font-size:12px; color:var(--muted); }
+summary { cursor:pointer; color:var(--muted); font-size:13px; margin-top:4px; }
+.nowrap { white-space:nowrap; font-size:13px; }
+</style></head><body><main>
+<h1>LogHunter report</h1>
+<div class="meta">Generated 2026-10-14 11:00 &middot; 2 file(s),
+ 449 lines, 438 events parsed</div>
+<div class="cards"><div class="card critical"><span>2</span>critical</div><div class="card high"><span>4</span>high</div><div class="card medium"><span>4</span>medium</div><div class="card low"><span>0</span>low</div></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Severity</th><th>Rule</th><th>Source IP</th><th>Details</th><th>MITRE ATT&amp;CK</th><th>Time (UTC)</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="sev critical">critical</span></td>
+  <td><code>ssh_success_after_bruteforce</code></td>
+  <td><code>203.0.113.45</code></td>
+  <td>Successful login as &#x27;root&#x27; after 38 failed attempts - possible compromise<details><summary>Evidence</summary><pre>Oct 12 10:15:22 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 46693 ssh2
+Oct 12 10:15:26 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 47821 ssh2
+Oct 12 10:15:30 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 52969 ssh2
+Oct 12 10:15:33 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 62009 ssh2
+Oct 12 10:15:37 srv-web01 sshd[4243]: Accepted password for root from 203.0.113.45 port 51122 ssh2</pre></details></td>
+  <td>T1078 Valid Accounts</td>
+  <td class="nowrap">2026-10-12 10:13:06<br>2026-10-12 10:15:37</td>
+</tr>
+<tr>
+  <td><span class="sev critical">critical</span></td>
+  <td><code>web_sql_injection</code></td>
+  <td><code>203.0.113.99</code></td>
+  <td>4 request(s) matching sql injection - 2 answered with 2xx, check whether it worked<details><summary>Evidence</summary><pre>203.0.113.99 - - [12/Oct/2026:14:40:06 +0000] &quot;GET /products?id=3%27%20OR%20%271%27%3D%271 HTTP/1.1&quot; 500 7050 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;
+203.0.113.99 - - [12/Oct/2026:14:40:10 +0000] &quot;GET /products?id=3%20UNION%20SELECT%20username,password%20FROM%20users-- HTTP/1.1&quot; 200 2816 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;
+203.0.113.99 - - [12/Oct/2026:14:40:15 +0000] &quot;GET /products?id=3%20AND%20SLEEP(5) HTTP/1.1&quot; 200 5323 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;
+203.0.113.99 - - [12/Oct/2026:14:40:19 +0000] &quot;GET /products?id=3;DROP%20TABLE%20users HTTP/1.1&quot; 500 2810 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;</pre></details></td>
+  <td>T1190 Exploit Public-Facing Application</td>
+  <td class="nowrap">2026-10-12 14:40:06<br>2026-10-12 14:40:19</td>
+</tr>
+<tr>
+  <td><span class="sev high">high</span></td>
+  <td><code>ssh_bruteforce</code></td>
+  <td><code>203.0.113.45</code></td>
+  <td>38 failed SSH logins (peak 38 in 300s)<details><summary>Evidence</summary><pre>Oct 12 10:13:06 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 43208 ssh2
+Oct 12 10:13:08 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 61369 ssh2
+Oct 12 10:13:14 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 40483 ssh2
+Oct 12 10:13:16 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 64692 ssh2
+Oct 12 10:13:19 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 45449 ssh2</pre></details></td>
+  <td>T1110.001 Brute Force: Password Guessing</td>
+  <td class="nowrap">2026-10-12 10:13:06<br>2026-10-12 10:15:33</td>
+</tr>
+<tr>
+  <td><span class="sev high">high</span></td>
+  <td><code>ssh_password_spraying</code></td>
+  <td><code>198.51.100.23</code></td>
+  <td>9 distinct usernames tried: admin, ftp, guest, oracle, pi, postgres, test, ubuntu ...<details><summary>Evidence</summary><pre>Oct 12 13:01:29 srv-web01 sshd[8491]: Invalid user admin from 198.51.100.23 port 50360
+Oct 12 13:01:29 srv-web01 sshd[8491]: Failed password for invalid user admin from 198.51.100.23 port 64637 ssh2
+Oct 12 13:02:43 srv-web01 sshd[1152]: Invalid user test from 198.51.100.23 port 55017
+Oct 12 13:02:43 srv-web01 sshd[1152]: Failed password for invalid user test from 198.51.100.23 port 60354 ssh2
+Oct 12 13:04:29 srv-web01 sshd[2638]: Invalid user oracle from 198.51.100.23 port 42400</pre></details></td>
+  <td>T1110.003 Brute Force: Password Spraying</td>
+  <td class="nowrap">2026-10-12 13:01:29<br>2026-10-12 13:13:24</td>
+</tr>
+<tr>
+  <td><span class="sev high">high</span></td>
+  <td><code>web_path_traversal</code></td>
+  <td><code>198.51.100.150</code></td>
+  <td>2 request(s) matching path traversal<details><summary>Evidence</summary><pre>198.51.100.150 - - [12/Oct/2026:16:00:20 +0000] &quot;GET /download?file=../../../../etc/passwd HTTP/1.1&quot; 403 8633 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/129.0 Safari/537.36&quot;
+198.51.100.150 - - [12/Oct/2026:16:00:39 +0000] &quot;GET /download?file=%252e%252e%252f%252e%252e%252fetc%252fpasswd HTTP/1.1&quot; 403 8371 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/129.0 Safari/537.36&quot;</pre></details></td>
+  <td>T1083 File and Directory Discovery</td>
+  <td class="nowrap">2026-10-12 16:00:20<br>2026-10-12 16:00:39</td>
+</tr>
+<tr>
+  <td><span class="sev high">high</span></td>
+  <td><code>web_xss</code></td>
+  <td><code>198.51.100.150</code></td>
+  <td>1 request(s) matching xss<details><summary>Evidence</summary><pre>198.51.100.150 - - [12/Oct/2026:16:00:53 +0000] &quot;GET /search?q=%3Cscript%3Ealert(1)%3C/script%3E HTTP/1.1&quot; 200 8348 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/129.0 Safari/537.36&quot;</pre></details></td>
+  <td>T1190 Exploit Public-Facing Application</td>
+  <td class="nowrap">2026-10-12 16:00:53<br>2026-10-12 16:00:53</td>
+</tr>
+<tr>
+  <td><span class="sev medium">medium</span></td>
+  <td><code>web_directory_scanning</code></td>
+  <td><code>192.0.2.77</code></td>
+  <td>30 client errors on 30 distinct paths (peak 30 in 300s)<details><summary>Evidence</summary><pre>192.0.2.77 - - [12/Oct/2026:11:00:01 +0000] &quot;GET /admin/ HTTP/1.1&quot; 404 5731 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:04 +0000] &quot;GET /backup/ HTTP/1.1&quot; 404 874 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:05 +0000] &quot;GET /old/ HTTP/1.1&quot; 404 1530 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:06 +0000] &quot;GET /test/ HTTP/1.1&quot; 404 4536 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:09 +0000] &quot;GET /dev/ HTTP/1.1&quot; 404 3653 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;</pre></details></td>
+  <td>T1595.003 Active Scanning: Wordlist Scanning</td>
+  <td class="nowrap">2026-10-12 11:00:01<br>2026-10-12 11:01:03</td>
+</tr>
+<tr>
+  <td><span class="sev medium">medium</span></td>
+  <td><code>web_scanner_user_agent</code></td>
+  <td><code>192.0.2.77</code></td>
+  <td>30 request(s) from offensive tool &#x27;nikto&#x27;<details><summary>Evidence</summary><pre>192.0.2.77 - - [12/Oct/2026:11:00:01 +0000] &quot;GET /admin/ HTTP/1.1&quot; 404 5731 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:04 +0000] &quot;GET /backup/ HTTP/1.1&quot; 404 874 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:05 +0000] &quot;GET /old/ HTTP/1.1&quot; 404 1530 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:06 +0000] &quot;GET /test/ HTTP/1.1&quot; 404 4536 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:09 +0000] &quot;GET /dev/ HTTP/1.1&quot; 404 3653 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)&quot;</pre></details></td>
+  <td>T1595 Active Scanning</td>
+  <td class="nowrap">2026-10-12 11:00:01<br>2026-10-12 11:01:03</td>
+</tr>
+<tr>
+  <td><span class="sev medium">medium</span></td>
+  <td><code>web_sensitive_file_probe</code></td>
+  <td><code>192.0.2.77</code></td>
+  <td>5 request(s) matching sensitive file probe<details><summary>Evidence</summary><pre>192.0.2.77 - - [12/Oct/2026:11:00:55 +0000] &quot;GET /.env HTTP/1.1&quot; 404 4261 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:57 +0000] &quot;GET /.git/config HTTP/1.1&quot; 404 2508 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)&quot;
+192.0.2.77 - - [12/Oct/2026:11:00:59 +0000] &quot;GET /wp-config.php HTTP/1.1&quot; 404 1786 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)&quot;
+192.0.2.77 - - [12/Oct/2026:11:01:01 +0000] &quot;GET /phpmyadmin/ HTTP/1.1&quot; 404 1029 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)&quot;
+192.0.2.77 - - [12/Oct/2026:11:01:03 +0000] &quot;GET /backup.sql HTTP/1.1&quot; 404 4954 &quot;-&quot; &quot;Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)&quot;</pre></details></td>
+  <td>T1595.003 Active Scanning: Wordlist Scanning</td>
+  <td class="nowrap">2026-10-12 11:00:55<br>2026-10-12 11:01:03</td>
+</tr>
+<tr>
+  <td><span class="sev medium">medium</span></td>
+  <td><code>web_scanner_user_agent</code></td>
+  <td><code>203.0.113.99</code></td>
+  <td>4 request(s) from offensive tool &#x27;sqlmap&#x27;<details><summary>Evidence</summary><pre>203.0.113.99 - - [12/Oct/2026:14:40:06 +0000] &quot;GET /products?id=3%27%20OR%20%271%27%3D%271 HTTP/1.1&quot; 500 7050 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;
+203.0.113.99 - - [12/Oct/2026:14:40:10 +0000] &quot;GET /products?id=3%20UNION%20SELECT%20username,password%20FROM%20users-- HTTP/1.1&quot; 200 2816 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;
+203.0.113.99 - - [12/Oct/2026:14:40:15 +0000] &quot;GET /products?id=3%20AND%20SLEEP(5) HTTP/1.1&quot; 200 5323 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;
+203.0.113.99 - - [12/Oct/2026:14:40:19 +0000] &quot;GET /products?id=3;DROP%20TABLE%20users HTTP/1.1&quot; 500 2810 &quot;-&quot; &quot;sqlmap/1.8.4#stable&quot;</pre></details></td>
+  <td>T1595 Active Scanning</td>
+  <td class="nowrap">2026-10-12 14:40:06<br>2026-10-12 14:40:19</td>
+</tr></tbody></table></div>
+</main></body></html>

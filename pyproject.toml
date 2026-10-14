@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loghunter"
+version = "0.1.0"
+description = "Detect brute force, password spraying and web attacks in SSH and web server logs"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Alawi Ahmed" }]
+keywords = ["security", "blue-team", "soc", "log-analysis", "intrusion-detection", "mitre-attack"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+loghunter = "loghunter.cli:main"
+
+[tool.setuptools]
+packages = ["loghunter"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

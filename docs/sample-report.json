@@ -1,0 +1,182 @@
+{
+  "generated_at": "2026-10-14T11:00:56",
+  "stats": {
+    "files": 2,
+    "lines": 449,
+    "parsed": 438,
+    "skipped": 11,
+    "by_source": {
+      "web": 337,
+      "ssh": 101
+    }
+  },
+  "summary": {
+    "critical": 2,
+    "high": 4,
+    "medium": 4,
+    "low": 0
+  },
+  "alerts": [
+    {
+      "rule": "ssh_success_after_bruteforce",
+      "severity": "critical",
+      "ip": "203.0.113.45",
+      "first_seen": "2026-10-12T10:13:06",
+      "last_seen": "2026-10-12T10:15:37",
+      "count": 38,
+      "description": "Successful login as 'root' after 38 failed attempts - possible compromise",
+      "mitre": "T1078 Valid Accounts",
+      "evidence": [
+        "Oct 12 10:15:22 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 46693 ssh2",
+        "Oct 12 10:15:26 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 47821 ssh2",
+        "Oct 12 10:15:30 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 52969 ssh2",
+        "Oct 12 10:15:33 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 62009 ssh2",
+        "Oct 12 10:15:37 srv-web01 sshd[4243]: Accepted password for root from 203.0.113.45 port 51122 ssh2"
+      ]
+    },
+    {
+      "rule": "web_sql_injection",
+      "severity": "critical",
+      "ip": "203.0.113.99",
+      "first_seen": "2026-10-12T14:40:06",
+      "last_seen": "2026-10-12T14:40:19",
+      "count": 4,
+      "description": "4 request(s) matching sql injection - 2 answered with 2xx, check whether it worked",
+      "mitre": "T1190 Exploit Public-Facing Application",
+      "evidence": [
+        "203.0.113.99 - - [12/Oct/2026:14:40:06 +0000] \"GET /products?id=3%27%20OR%20%271%27%3D%271 HTTP/1.1\" 500 7050 \"-\" \"sqlmap/1.8.4#stable\"",
+        "203.0.113.99 - - [12/Oct/2026:14:40:10 +0000] \"GET /products?id=3%20UNION%20SELECT%20username,password%20FROM%20users-- HTTP/1.1\" 200 2816 \"-\" \"sqlmap/1.8.4#stable\"",
+        "203.0.113.99 - - [12/Oct/2026:14:40:15 +0000] \"GET /products?id=3%20AND%20SLEEP(5) HTTP/1.1\" 200 5323 \"-\" \"sqlmap/1.8.4#stable\"",
+        "203.0.113.99 - - [12/Oct/2026:14:40:19 +0000] \"GET /products?id=3;DROP%20TABLE%20users HTTP/1.1\" 500 2810 \"-\" \"sqlmap/1.8.4#stable\""
+      ]
+    },
+    {
+      "rule": "ssh_bruteforce",
+      "severity": "high",
+      "ip": "203.0.113.45",
+      "first_seen": "2026-10-12T10:13:06",
+      "last_seen": "2026-10-12T10:15:33",
+      "count": 38,
+      "description": "38 failed SSH logins (peak 38 in 300s)",
+      "mitre": "T1110.001 Brute Force: Password Guessing",
+      "evidence": [
+        "Oct 12 10:13:06 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 43208 ssh2",
+        "Oct 12 10:13:08 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 61369 ssh2",
+        "Oct 12 10:13:14 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 40483 ssh2",
+        "Oct 12 10:13:16 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 64692 ssh2",
+        "Oct 12 10:13:19 srv-web01 sshd[4242]: Failed password for root from 203.0.113.45 port 45449 ssh2"
+      ]
+    },
+    {
+      "rule": "ssh_password_spraying",
+      "severity": "high",
+      "ip": "198.51.100.23",
+      "first_seen": "2026-10-12T13:01:29",
+      "last_seen": "2026-10-12T13:13:24",
+      "count": 9,
+      "description": "9 distinct usernames tried: admin, ftp, guest, oracle, pi, postgres, test, ubuntu ...",
+      "mitre": "T1110.003 Brute Force: Password Spraying",
+      "evidence": [
+        "Oct 12 13:01:29 srv-web01 sshd[8491]: Invalid user admin from 198.51.100.23 port 50360",
+        "Oct 12 13:01:29 srv-web01 sshd[8491]: Failed password for invalid user admin from 198.51.100.23 port 64637 ssh2",
+        "Oct 12 13:02:43 srv-web01 sshd[1152]: Invalid user test from 198.51.100.23 port 55017",
+        "Oct 12 13:02:43 srv-web01 sshd[1152]: Failed password for invalid user test from 198.51.100.23 port 60354 ssh2",
+        "Oct 12 13:04:29 srv-web01 sshd[2638]: Invalid user oracle from 198.51.100.23 port 42400"
+      ]
+    },
+    {
+      "rule": "web_path_traversal",
+      "severity": "high",
+      "ip": "198.51.100.150",
+      "first_seen": "2026-10-12T16:00:20",
+      "last_seen": "2026-10-12T16:00:39",
+      "count": 2,
+      "description": "2 request(s) matching path traversal",
+      "mitre": "T1083 File and Directory Discovery",
+      "evidence": [
+        "198.51.100.150 - - [12/Oct/2026:16:00:20 +0000] \"GET /download?file=../../../../etc/passwd HTTP/1.1\" 403 8633 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/129.0 Safari/537.36\"",
+        "198.51.100.150 - - [12/Oct/2026:16:00:39 +0000] \"GET /download?file=%252e%252e%252f%252e%252e%252fetc%252fpasswd HTTP/1.1\" 403 8371 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/129.0 Safari/537.36\""
+      ]
+    },
+    {
+      "rule": "web_xss",
+      "severity": "high",
+      "ip": "198.51.100.150",
+      "first_seen": "2026-10-12T16:00:53",
+      "last_seen": "2026-10-12T16:00:53",
+      "count": 1,
+      "description": "1 request(s) matching xss",
+      "mitre": "T1190 Exploit Public-Facing Application",
+      "evidence": [
+        "198.51.100.150 - - [12/Oct/2026:16:00:53 +0000] \"GET /search?q=%3Cscript%3Ealert(1)%3C/script%3E HTTP/1.1\" 200 8348 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/129.0 Safari/537.36\""
+      ]
+    },
+    {
+      "rule": "web_directory_scanning",
+      "severity": "medium",
+      "ip": "192.0.2.77",
+      "first_seen": "2026-10-12T11:00:01",
+      "last_seen": "2026-10-12T11:01:03",
+      "count": 30,
+      "description": "30 client errors on 30 distinct paths (peak 30 in 300s)",
+      "mitre": "T1595.003 Active Scanning: Wordlist Scanning",
+      "evidence": [
+        "192.0.2.77 - - [12/Oct/2026:11:00:01 +0000] \"GET /admin/ HTTP/1.1\" 404 5731 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:04 +0000] \"GET /backup/ HTTP/1.1\" 404 874 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:05 +0000] \"GET /old/ HTTP/1.1\" 404 1530 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:06 +0000] \"GET /test/ HTTP/1.1\" 404 4536 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:09 +0000] \"GET /dev/ HTTP/1.1\" 404 3653 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\""
+      ]
+    },
+    {
+      "rule": "web_scanner_user_agent",
+      "severity": "medium",
+      "ip": "192.0.2.77",
+      "first_seen": "2026-10-12T11:00:01",
+      "last_seen": "2026-10-12T11:01:03",
+      "count": 30,
+      "description": "30 request(s) from offensive tool 'nikto'",
+      "mitre": "T1595 Active Scanning",
+      "evidence": [
+        "192.0.2.77 - - [12/Oct/2026:11:00:01 +0000] \"GET /admin/ HTTP/1.1\" 404 5731 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:04 +0000] \"GET /backup/ HTTP/1.1\" 404 874 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:05 +0000] \"GET /old/ HTTP/1.1\" 404 1530 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:06 +0000] \"GET /test/ HTTP/1.1\" 404 4536 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:09 +0000] \"GET /dev/ HTTP/1.1\" 404 3653 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000001)\""
+      ]
+    },
+    {
+      "rule": "web_sensitive_file_probe",
+      "severity": "medium",
+      "ip": "192.0.2.77",
+      "first_seen": "2026-10-12T11:00:55",
+      "last_seen": "2026-10-12T11:01:03",
+      "count": 5,
+      "description": "5 request(s) matching sensitive file probe",
+      "mitre": "T1595.003 Active Scanning: Wordlist Scanning",
+      "evidence": [
+        "192.0.2.77 - - [12/Oct/2026:11:00:55 +0000] \"GET /.env HTTP/1.1\" 404 4261 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:57 +0000] \"GET /.git/config HTTP/1.1\" 404 2508 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:00:59 +0000] \"GET /wp-config.php HTTP/1.1\" 404 1786 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:01:01 +0000] \"GET /phpmyadmin/ HTTP/1.1\" 404 1029 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)\"",
+        "192.0.2.77 - - [12/Oct/2026:11:01:03 +0000] \"GET /backup.sql HTTP/1.1\" 404 4954 \"-\" \"Mozilla/5.00 (Nikto/2.5.0) (Evasions:None) (Test:000002)\""
+      ]
+    },
+    {
+      "rule": "web_scanner_user_agent",
+      "severity": "medium",
+      "ip": "203.0.113.99",
+      "first_seen": "2026-10-12T14:40:06",
+      "last_seen": "2026-10-12T14:40:19",
+      "count": 4,
+      "description": "4 request(s) from offensive tool 'sqlmap'",
+      "mitre": "T1595 Active Scanning",
+      "evidence": [
+        "203.0.113.99 - - [12/Oct/2026:14:40:06 +0000] \"GET /products?id=3%27%20OR%20%271%27%3D%271 HTTP/1.1\" 500 7050 \"-\" \"sqlmap/1.8.4#stable\"",
+        "203.0.113.99 - - [12/Oct/2026:14:40:10 +0000] \"GET /products?id=3%20UNION%20SELECT%20username,password%20FROM%20users-- HTTP/1.1\" 200 2816 \"-\" \"sqlmap/1.8.4#stable\"",
+        "203.0.113.99 - - [12/Oct/2026:14:40:15 +0000] \"GET /products?id=3%20AND%20SLEEP(5) HTTP/1.1\" 200 5323 \"-\" \"sqlmap/1.8.4#stable\"",
+        "203.0.113.99 - - [12/Oct/2026:14:40:19 +0000] \"GET /products?id=3;DROP%20TABLE%20users HTTP/1.1\" 500 2810 \"-\" \"sqlmap/1.8.4#stable\""
+      ]
+    }
+  ]
+}

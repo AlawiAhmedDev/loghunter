@@ -9,7 +9,7 @@ description = "Detect brute force, password spraying and web attacks in SSH and 
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "Alawi Ahmed" }]
+authors = [{ name = "Alawi Masfar" }]
 keywords = ["security", "blue-team", "soc", "log-analysis", "intrusion-detection", "mitre-attack"]
 dependencies = []
 

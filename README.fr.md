@@ -79,7 +79,7 @@ LogHunter est un outil d'apprentissage et de triage. Les règles à base de sign
 
 ## Auteur
 
-**Alawi Ahmed**, Master en Cybersécurité et Intelligence Artificielle
+**Alawi Masfar**, Master en Cybersécurité et Intelligence Artificielle
 GitHub : [@AlawiAhmedDev](https://github.com/AlawiAhmedDev)
 
 ## Licence

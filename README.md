@@ -146,7 +146,7 @@ LogHunter is a learning and triage tool. Signature-based rules miss obfuscated a
 
 ## Author
 
-**Alawi Ahmed**, MSc in Cybersecurity and Artificial Intelligence
+**Alawi Masfar**, MSc in Cybersecurity and Artificial Intelligence
 GitHub: [@AlawiAhmedDev](https://github.com/AlawiAhmedDev)
 
 ## License
